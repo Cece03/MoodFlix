@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Emotion Detection</title>
+  <style>
+    body {
+      font-family: Arial;
+      text-align: center;
+      margin: 0;
+      padding: 0;
+
+      /* 🔥 BACKGROUND IMAGE */
+      background: url('images/indexBG.png') no-repeat center center fixed;
+      background-size: cover;
+      color: white;
+    }
+
+    h2 {
+  color: #0b3d91;   /* dark blue */
+  font-weight: bold;
+}
+
+    video {
+      border: 2px solid white;
+      border-radius: 10px;
+      margin-top: 20px;
+    }
+
+    #recommendation {
+      margin-top: 20px;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 15px;
+    }
+
+    #emotion {
+  color: #0b3d91;   /* dark blue */
+  font-weight: bold;
+  font-size: 20px;
+  margin-top: 10px;
+}
+
+    iframe {
+      width: 250px;
+      height: 150px;
+      border-radius: 8px;
+    }
+
+    img {
+      width: 150px;
+      height: 220px;
+      border-radius: 8px;
+    }
+
+    button {
+      padding: 10px 20px;
+      margin-top: 20px;
+      cursor: pointer;
+      border-radius: 6px;
+      border: none;
+      font-weight: bold;
+      color: #0b3d91;
+    }
+
+    /* 🔥 BACK BUTTON */
+    .back-btn {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      text-decoration: none;
+      font-size: 24px;
+      color: white;
+      background: rgba(0,0,0,0.5);
+      padding: 8px 12px;
+      border-radius: 8px;
+    }
+
+  </style>
+</head>
+
+<body>
+
+<!-- 🔙 BACK BUTTON -->
+<a href="UserDash.html" class="back-btn">←</a>
+
+<h2>Emotion Detection</h2>
+
+<video id="video" width="400" height="300" autoplay muted></video>
+<p id="emotion"></p>
+
+<div id="recommendation"></div>
+<button onclick="nextSet()">Next ▶</button>
+
+<script src="https://cdn.jsdelivr.net/npm/@vladmandic/face-api/dist/face-api.min.js"></script>
+
+<script>
+const video = document.getElementById('video');
+
+const data = {
+
+  happy: [
+    [
+      ["anime","https://www.youtube.com/embed/9KO6l9rjZto"],
+      ["manga","https://cdn.myanimelist.net/images/manga/2/253146.jpg"],
+      ["kdrama","https://www.youtube.com/embed/mh4R-WXRhQo"],
+      ["cdrama","https://www.youtube.com/embed/UAqljBnWzRE"],
+      ["kpop","https://www.youtube.com/embed/Y8JFxS1HlDo"]
+    ],
+    [
+      ["anime","https://www.youtube.com/embed/MCb13lbVGE0"],
+      ["manga","https://cdn.myanimelist.net/images/manga/3/117681.jpg"],
+      ["kdrama","https://www.youtube.com/embed/BhP1eYQ5Pxk"],
+      ["cdrama","https://www.youtube.com/embed/tiiN4rDwa8g"],
+      ["kpop","https://www.youtube.com/embed/Nu2yQ1zYDYU"]
+    ]
+  ],
+
+  sad: [
+    [
+      ["anime","https://www.youtube.com/embed/FwE87GX3dEc"],
+      ["manga","https://cdn.myanimelist.net/images/manga/3/179023.jpg"],
+      ["kdrama","https://www.youtube.com/embed/Y5Cp5V9_sKo"],
+      ["cdrama","https://www.youtube.com/embed/tiwcMjH1dRw"],
+      ["kpop","https://www.youtube.com/embed/I3dezFzsNss"]
+    ],
+    [
+      ["anime","https://www.youtube.com/embed/4KSN7mxhiYE"],
+      ["manga","https://cdn.myanimelist.net/images/manga/2/166805.jpg"],
+      ["kdrama","https://www.youtube.com/embed/gYp4cKumTwU"],
+      ["cdrama","https://www.youtube.com/embed/23PlXDnakJM"],
+      ["kpop","https://www.youtube.com/embed/Y8JFxS1HlDo"]
+    ]
+  ],
+
+  scared: [
+    [
+      ["anime","https://www.youtube.com/embed/LV-nazLVmgo"],
+      ["manga","https://cdn.myanimelist.net/images/manga/1/258245.jpg"],
+      ["kdrama","https://www.youtube.com/embed/_J8tYxYB_YU"],
+      ["cdrama","https://www.youtube.com/embed/2ldvydu34Is"],
+      ["kpop","https://www.youtube.com/embed/TQTlCHxyuu8"]
+    ],
+    [
+      ["anime","https://www.youtube.com/embed/MPfZhgLiK6w"],
+      ["manga","https://cdn.myanimelist.net/images/manga/2/37846.jpg"],
+      ["kdrama","https://www.youtube.com/embed/kjiPsdiHWm0"],
+      ["cdrama","https://www.youtube.com/embed/DyAsfo6rEz0"],
+      ["kpop","https://www.youtube.com/embed/UuV2BmJ1p_I"]
+    ]
+  ],
+
+  calm: [
+    [
+      ["anime","https://www.youtube.com/embed/ofXigq9aIpo"],
+      ["manga","https://cdn.myanimelist.net/images/manga/3/222295.jpg"],
+      ["kdrama","https://www.youtube.com/embed/z66fazyp3-M"],
+      ["cdrama","https://www.youtube.com/embed/qSruSMJACmg"],
+      ["kpop","https://www.youtube.com/embed/UuV2BmJ1p_I"]
+    ],
+    [
+      ["anime","https://www.youtube.com/embed/rZ95aZmQu_8"],
+      ["manga","https://cdn.myanimelist.net/images/manga/2/196930.jpg"],
+      ["kdrama","https://www.youtube.com/embed/tQM2aelaWzc"],
+      ["cdrama","https://www.youtube.com/embed/HrUeOw7zL40"],
+      ["kpop","https://www.youtube.com/embed/Nu2yQ1zYDYU"]
+    ]
+  ]
+};
+
+let currentMood = "happy";
+let setIndex = 0;
+let lockedMood = null;
+
+async function start() {
+  await faceapi.nets.tinyFaceDetector.loadFromUri('https://cdn.jsdelivr.net/npm/@vladmandic/face-api/model/');
+  await faceapi.nets.faceExpressionNet.loadFromUri('https://cdn.jsdelivr.net/npm/@vladmandic/face-api/model/');
+
+  const stream = await navigator.mediaDevices.getUserMedia({ video: {} });
+  video.srcObject = stream;
+
+  setInterval(async () => {
+    const detections = await faceapi
+      .detectAllFaces(video, new faceapi.TinyFaceDetectorOptions())
+      .withFaceExpressions();
+
+    if (detections.length > 0 && !lockedMood) {
+      const mood = getMood(detections[0].expressions);
+      document.getElementById("emotion").innerText = "Detected: " + mood;
+
+      lockedMood = mood;
+      currentMood = mood;
+      setIndex = 0;
+
+      showSet();
+    }
+  }, 500);
+}
+
+function getMood(expr){
+  let max=0, mood="calm";
+  for(let k in expr){
+    if(expr[k]>max){ max=expr[k]; mood=k; }
+  }
+
+  if(mood==="happy") return "happy";
+  if(mood==="sad") return "sad";
+  if(mood==="fear"||mood==="surprised") return "scared";
+  return "calm";
+}
+
+function showSet(){
+  const box = document.getElementById("recommendation");
+  box.innerHTML = "";
+
+  const set = data[currentMood][setIndex];
+
+  set.forEach(([type, link]) => {
+    if(type === "manga"){
+      const img = document.createElement("img");
+      img.src = link;
+      box.appendChild(img);
+    } else {
+      const iframe = document.createElement("iframe");
+      iframe.src = link;
+      iframe.allow = "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture";
+      iframe.allowFullscreen = true;
+      box.appendChild(iframe);
+    }
+  });
+}
+
+function nextSet(){
+  if(!lockedMood) return;
+
+  setIndex++;
+  if(setIndex >= data[currentMood].length){
+    setIndex = 0;
+  }
+
+  showSet();
+}
+
+start();
+</script>
+
+</body>
+</html>

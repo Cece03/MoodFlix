@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>MoodFlix - Kpop</title>
+<link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<div class="kpop-page">
+
+    <!-- Back arrow -->
+    <a href="UserDash.html" class="back-arrow">←</a>
+
+    <!-- Video Player -->
+    <div class="kpop-player" style="text-align:center;">
+
+        <iframe id="songPlayer" width="560" height="315"
+        src="https://www.youtube.com/embed/4TWR90KJl84"
+        frameborder="0" allowfullscreen></iframe>
+
+        <div style="margin-top:10px;">
+            <button class="next-song" onclick="nextSong()">Next ▶</button>
+            <button class="wishlist-btn" onclick="addToWishlist()">❤️</button>
+        </div>
+
+    </div>
+
+</div>
+
+<script>
+// K-Pop songs with titles
+let songs = [
+    {url:"https://www.youtube.com/embed/4TWR90KJl84", title:"Next Level - aespa"},
+    {url:"https://www.youtube.com/embed/Y8JFxS1HlDo", title:"Love Dive - IVE"},
+    {url:"https://www.youtube.com/embed/I3dezFzsNss", title:"Growl - EXO"},
+    {url:"https://www.youtube.com/embed/TQTlCHxyuu8", title:"God's Menu - Stray Kids"},
+    {url:"https://www.youtube.com/embed/UuV2BmJ1p_I", title:"Any Song - ZICO"},
+    {url:"https://www.youtube.com/embed/Nu2yQ1zYDYU", title:"Shine - PENTAGON"}
+];
+
+let index = 0;
+
+// Next song
+function nextSong(){
+    index++;
+    if(index >= songs.length) index = 0;
+    document.getElementById("songPlayer").src = songs[index].url;
+}
+
+// Add current song to wishlist
+function addToWishlist(){
+    let wishlist = JSON.parse(localStorage.getItem("wishlist") || "[]");
+    let currentSong = songs[index];
+
+    if(!wishlist.find(v => v.url === currentSong.url)){
+        wishlist.push(currentSong);
+        alert(`Added "${currentSong.title}" to wishlist!`);
+    } else {
+        alert(`"${currentSong.title}" is already in wishlist!`);
+    }
+
+    localStorage.setItem("wishlist", JSON.stringify(wishlist));
+}
+</script>
+
+</body>
+</html>

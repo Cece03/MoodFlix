@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>MoodFlix - Wishlist</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+
+<style>
+    body {
+        background: url("images/WishlistBg.png");
+        background-size: cover;
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+    }
+
+    .logo{
+        width:120px;
+        height: 100px;
+    }
+
+    .header-buttons{
+        display:flex;
+        gap:15px;
+    }
+
+    .capsule-btn{
+        padding:10px 50px;
+        border-radius:50px;
+        text-decoration:none;
+        background:#ff99cc;
+        color:white;
+        font-weight:500;
+        transition:0.3s;
+    }
+
+    .capsule-btn:hover{
+        background:#ff66b2;
+        transform:scale(1.05);
+    }
+
+    .wishlist-container {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        margin: 40px;
+        gap: 20px;
+    }
+
+    .wishlist-card {
+        background-color: rgba(255,255,255,0.9);
+        border-radius: 10px;
+        padding: 15px;
+        width: 220px;
+        text-align: center;
+        position: relative;
+    }
+
+    .wishlist-card img {
+        width: 100%;
+        border-radius: 10px;
+    }
+
+    .wishlist-card h3 {
+        margin: 10px 0 5px 0;
+    }
+
+    .wishlist-card button {
+        background-color: #ff4c4c;
+        border: none;
+        color: white;
+        padding: 8px 12px;
+        border-radius: 20px;
+        cursor: pointer;
+        margin-top: 10px;
+    }
+</style>
+</head>
+
+<body>
+
+<header class="header">
+    <img src="images/Logo.png" class="logo">
+    <div class="header-buttons">
+        <a href="UserDash.html" class="capsule-btn">UserDash</a>
+    </div>
+</header>
+
+<div class="wishlist-container" id="wishlistContainer"></div>
+
+<script>
+// Load wishlist from localStorage
+let wishlist = JSON.parse(localStorage.getItem("wishlist")) || [];
+
+// Normalize items
+wishlist = wishlist.map(item => ({
+    id: item.id || item.title || Math.random().toString(36).substring(2,9),
+    title: item.title || "Untitled",
+    category: item.category || "Unknown",
+    image_url: item.image_url || "https://via.placeholder.com/150"
+}));
+
+localStorage.setItem("wishlist", JSON.stringify(wishlist));
+
+// Render wishlist
+function renderWishlist() {
+    const container = document.getElementById("wishlistContainer");
+    container.innerHTML = "";
+
+    if(wishlist.length === 0){
+        container.innerHTML = "<h2 style='color:white'>Your wishlist is empty!</h2>";
+        return;
+    }
+
+    wishlist.forEach((item, index) => {   // ✅ FIXED
+        const card = document.createElement("div");
+        card.className = "wishlist-card";
+
+        card.innerHTML = `
+            <img src="${item.image_url}" alt="${item.title}">
+            <h3>${item.title}</h3>
+            <p>${item.category}</p>
+            <button onclick="removeFromWishlist(${index})">Remove ❤️</button>
+        `;
+        container.appendChild(card);
+    });
+}
+
+// ✅ FIXED REMOVE FUNCTION (INDEX BASED)
+function removeFromWishlist(index) {
+    wishlist.splice(index, 1);
+    localStorage.setItem("wishlist", JSON.stringify(wishlist));
+    renderWishlist();
+}
+
+// Add to wishlist
+function addToWishlist(item) {
+    if(!wishlist.find(i => i.title === item.title)) {
+        const newItem = {
+            id: item.id || Math.random().toString(36).substring(2,9),
+            title: item.title || "Untitled",
+            category: item.category || "Unknown",
+            image_url: item.image_url || "https://via.placeholder.com/150"
+        };
+        wishlist.push(newItem);
+        localStorage.setItem("wishlist", JSON.stringify(wishlist));
+        alert(`${newItem.title} added to wishlist!`);
+    } else {
+        alert(`${item.title} is already in your wishlist!`);
+    }
+}
+
+// Initial render
+renderWishlist();
+</script>
+
+</body>
+</html>

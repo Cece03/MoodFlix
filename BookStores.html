@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>MoodFlix - Bookstores</title>
+
+<link rel="stylesheet" href="style.css">
+
+<!-- Leaflet CSS -->
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+
+<style>
+
+body{
+margin:0;
+font-family:Arial, sans-serif;
+background:#f5f5f5;
+}
+
+.map-page{
+height:100vh;
+display:flex;
+flex-direction:column;
+align-items:center;
+justify-content:center;
+position:relative;
+}
+
+.map-title{
+font-size:30px;
+margin-bottom:10px;
+}
+
+.city-select{
+padding:8px 15px;
+font-size:16px;
+border-radius:8px;
+margin-bottom:15px;
+}
+
+#map{
+height:500px;
+width:80%;
+border-radius:15px;
+box-shadow:0 0 20px rgba(0,0,0,0.25);
+}
+
+.back-arrow{
+position:absolute;
+top:20px;
+left:20px;
+font-size:30px;
+text-decoration:none;
+color:black;
+font-weight:bold;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="map-page">
+
+<a href="UserDash.html" class="back-arrow">←</a>
+
+<h2 class="map-title">Find Bookstores in Maharashtra</h2>
+
+<select class="city-select" onchange="showCity(this.value)">
+<option value="mumbai">Mumbai</option>
+<option value="pune">Pune</option>
+<option value="thane">Thane</option>
+<option value="nashik">Nashik</option>
+<option value="nagpur">Nagpur</option>
+</select>
+
+<div id="map"></div>
+
+</div>
+
+<!-- Leaflet JS -->
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+<script>
+
+var map = L.map('map').setView([19.0760,72.8777],11);
+
+L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png',{
+maxZoom:19
+}).addTo(map);
+
+var markers=[];
+
+function clearMarkers(){
+markers.forEach(m=>map.removeLayer(m));
+markers=[];
+}
+
+function showCity(city){
+
+clearMarkers();
+
+/* MUMBAI */
+
+if(city==="mumbai"){
+
+map.setView([19.0760,72.8777],11);
+
+markers.push(
+L.marker([18.9388,72.8354]).addTo(map).bindPopup("<b>Kitab Khana</b><br>Fort, Mumbai"),
+L.marker([19.0596,72.8295]).addTo(map).bindPopup("<b>Title Waves</b><br>Bandra, Mumbai"),
+L.marker([19.0330,72.8397]).addTo(map).bindPopup("<b>Trilogy Bookstore</b><br>Bandra, Mumbai"),
+L.marker([19.0728,72.8826]).addTo(map).bindPopup("<b>Crossword</b><br>Kemps Corner, Mumbai"),
+L.marker([19.1106,72.8697]).addTo(map).bindPopup("<b>Granth Book Store</b><br>Vile Parle, Mumbai")
+);
+
+}
+
+/* PUNE */
+
+if(city==="pune"){
+
+map.setView([18.5204,73.8567],12);
+
+markers.push(
+L.marker([18.5196,73.8553]).addTo(map).bindPopup("<b>Pagdandi Bookstore Cafe</b><br>Pune"),
+L.marker([18.5246,73.8446]).addTo(map).bindPopup("<b>International Book Service</b><br>Pune"),
+L.marker([18.5174,73.8077]).addTo(map).bindPopup("<b>Crossword</b><br>Aundh, Pune"),
+L.marker([18.5314,73.8446]).addTo(map).bindPopup("<b>Akshardhara Book Gallery</b><br>Pune"),
+L.marker([18.5093,73.8077]).addTo(map).bindPopup("<b>Book World</b><br>Pune")
+);
+
+}
+
+/* THANE */
+
+if(city==="thane"){
+
+map.setView([19.2183,72.9781],12);
+
+markers.push(
+L.marker([19.2183,72.9781]).addTo(map).bindPopup("<b>Crossword</b><br>Thane"),
+L.marker([19.2150,72.9789]).addTo(map).bindPopup("<b>Om Book Depot</b><br>Thane"),
+L.marker([19.2300,72.9870]).addTo(map).bindPopup("<b>Gyan Book Store</b><br>Thane"),
+L.marker([19.2240,72.9820]).addTo(map).bindPopup("<b>Readers Corner</b><br>Thane"),
+L.marker([19.2080,72.9750]).addTo(map).bindPopup("<b>Shree Book Stall</b><br>Thane")
+);
+
+}
+
+/* NASHIK */
+
+if(city==="nashik"){
+
+map.setView([19.9975,73.7898],12);
+
+markers.push(
+L.marker([19.9975,73.7898]).addTo(map).bindPopup("<b>Crossword</b><br>Nashik"),
+L.marker([19.9900,73.7800]).addTo(map).bindPopup("<b>Akshar Book Gallery</b><br>Nashik"),
+L.marker([20.0000,73.7950]).addTo(map).bindPopup("<b>Book World</b><br>Nashik"),
+L.marker([19.9850,73.7700]).addTo(map).bindPopup("<b>Vidya Book Depot</b><br>Nashik"),
+L.marker([20.0100,73.8000]).addTo(map).bindPopup("<b>Readers Point</b><br>Nashik")
+);
+
+}
+
+/* NAGPUR */
+
+if(city==="nagpur"){
+
+map.setView([21.1458,79.0882],12);
+
+markers.push(
+L.marker([21.1458,79.0882]).addTo(map).bindPopup("<b>Crossword</b><br>Nagpur"),
+L.marker([21.1500,79.0900]).addTo(map).bindPopup("<b>Raj Book Depot</b><br>Nagpur"),
+L.marker([21.1400,79.0950]).addTo(map).bindPopup("<b>Vidarbha Book House</b><br>Nagpur"),
+L.marker([21.1480,79.0820]).addTo(map).bindPopup("<b>Readers Corner</b><br>Nagpur"),
+L.marker([21.1550,79.1000]).addTo(map).bindPopup("<b>Universal Book Store</b><br>Nagpur")
+);
+
+}
+
+}
+
+showCity("mumbai");
+
+</script>
+
+</body>
+</html>
+```

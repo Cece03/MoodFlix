@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Games Page</title>
+
+  <style>
+    body {
+      font-family: Arial;
+      text-align: center;
+      background: url("images/Games.png");
+      background-size: cover;
+      background-position: center;
+      color: white;
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+    }
+
+    h1 {
+      margin-top: 20px;
+      color: #f7eaea;
+    }
+
+    .back-btn {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      font-size: 20px;
+      text-decoration: none;
+      color: white;
+    }
+
+    .toggle {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      padding: 10px 20px;
+      background: rgba(0,0,0,0.6);
+      border-radius: 20px;
+      cursor: pointer;
+    }
+
+    .container {
+      margin-top: 100px;
+    }
+
+    .box {
+      background: rgba(0,0,0,0.7);
+      padding: 20px;
+      margin: 20px auto;
+      width: 350px;
+      border-radius: 10px;
+    }
+
+    input, select, button {
+      padding: 10px;
+      margin: 10px;
+      border-radius: 8px;
+      border: none;
+    }
+
+    button {
+      cursor: pointer;
+      background: #ff7675;
+      color: white;
+    }
+
+    #emoji {
+      font-size: 30px;
+    }
+
+    /* MEMORY GRID */
+    #gameBoard {
+      margin-top: 30px;
+      display: grid;
+      grid-template-columns: repeat(5, 80px);
+      gap: 10px;
+      justify-content: center;
+    }
+
+    .card {
+      width: 80px;
+      height: 80px;
+      background: #222;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 10px;
+      cursor: pointer;
+      font-size: 10px;
+      text-align: center;
+    }
+
+    .flipped {
+      background: #ff7675;
+    }
+
+    #winMsg {
+  color: #ff006a;
+  font-weight: bold;
+  font-size: 20px;
+  text-shadow: 0 0 10px black;
+}
+
+  </style>
+</head>
+
+<body>
+
+<a href="UserDash.html" class="back-btn">⬅</a>
+
+<h1>🎮 Games Zone</h1>
+
+<div class="toggle" onclick="toggleGame()">Switch Game</div>
+
+<div class="container">
+
+  <!-- QUIZ GAME -->
+  <div id="quizSection">
+
+    <div class="box">
+      <h3>Select Category</h3>
+      <select id="category">
+        <option value="anime">Anime</option>
+        <option value="kpop">KPop</option>
+        <option value="kdrama">KDrama</option>
+        <option value="cdrama">CDrama</option>
+        <option value="manga">Manga</option>
+      </select>
+      <br>
+      <button onclick="startGame()">Start</button>
+    </div>
+
+    <div class="box" id="gameBox" style="display:none;">
+      <h3 id="catTitle"></h3>
+      <p>Question <span id="qNum"></span>/5</p>
+
+      <div id="emoji"></div>
+
+      <input type="text" id="answer" placeholder="Enter answer">
+
+      <br>
+      <button onclick="submitAnswer()">Submit</button>
+      <button onclick="getHint()">Hint 💡</button>
+      <button onclick="nextQuestion()">Next ➡</button>
+
+      <p>Attempts: <span id="attempts"></span></p>
+      <p>Hints: <span id="hints"></span>/3</p>
+
+      <p id="feedback"></p>
+    </div>
+
+  </div>
+
+  <!-- MEMORY GAME -->
+  <div id="memorySection" style="display:none;">
+
+    <div class="box">
+      <h3>Select Category</h3>
+
+      <select id="memoryCategory">
+        <option value="anime">Anime</option>
+        <option value="kpop">KPop</option>
+        <option value="kdrama">KDrama</option>
+      </select>
+
+      <br>
+      <button onclick="startMemoryGame()">Start Memory Game</button>
+    </div>
+
+    <div id="gameBoard"></div>
+
+    <p id="winMsg"></p>
+
+  </div>
+
+</div>
+
+<script>
+
+// TOGGLE
+function toggleGame() {
+  let quiz = document.getElementById("quizSection");
+  let memory = document.getElementById("memorySection");
+
+  if (quiz.style.display === "none") {
+    quiz.style.display = "block";
+    memory.style.display = "none";
+  } else {
+    quiz.style.display = "none";
+    memory.style.display = "block";
+  }
+}
+
+// QUIZ DATA (unchanged)
+let data = {
+  anime: [
+    {emoji:"👦⚡👹", answer:"naruto", hints:["Ninja","Hokage","Orange"]},
+    {emoji:"🧱👹⚔️", answer:"attack on titan", hints:["Titans","Walls","Eren"]},
+    {emoji:"🗡️👺🌸", answer:"demon slayer", hints:["Tanjiro","Demons","Sister"]},
+    {emoji:"👊👻📿", answer:"jujutsu kaisen", hints:["Curses","Gojo","School"]},
+    {emoji:"🏐🔥", answer:"haikyuu", hints:["Volleyball","Team","Orange hair"]}
+  ],
+
+  kpop: [
+    {emoji:"💣💃🕺", answer:"dynamite", hints:["BTS","English","2020"]},
+    {emoji:"🍭❤️", answer:"love dive", hints:["IVE","Girl group","Hit"]},
+    {emoji:"🍽️🔥👨‍🍳", answer:"gods menu", hints:["Stray Kids","Cooking","Loud"]},
+    {emoji:"💡✨", answer:"shine", hints:["Pentagon","Bright","Song"]},
+    {emoji:"🎤👑", answer:"growl", hints:["EXO","Old","Iconic"]}
+  ],
+
+  kdrama: [
+    {emoji:"🪂❤️", answer:"crash landing on you", hints:["Love","North Korea","Hyun Bin"]},
+    {emoji:"🧝‍♂️🔥", answer:"goblin", hints:["Immortal","Bride","Sword"]},
+    {emoji:"⚖️🕴️", answer:"vincenzo", hints:["Mafia","Lawyer","Italian"]},
+    {emoji:"💄🏫", answer:"true beauty", hints:["School","Makeup","Love"]},
+    {emoji:"🏋️‍♀️❤️", answer:"weightlifting fairy", hints:["Sports","Cute","College"]}
+  ]
+};
+
+let currentCategory, currentQ, attempts, hintCount, score;
+
+function startGame() {
+  currentCategory = document.getElementById("category").value;
+  document.getElementById("gameBox").style.display = "block";
+  currentQ = 0;
+  score = 0;
+  loadQuestion();
+}
+
+function loadQuestion() {
+  let q = data[currentCategory][currentQ];
+  document.getElementById("emoji").innerText = q.emoji;
+  document.getElementById("qNum").innerText = currentQ + 1;
+
+  attempts = 5;
+  hintCount = 0;
+
+  document.getElementById("attempts").innerText = attempts;
+  document.getElementById("hints").innerText = hintCount;
+  document.getElementById("feedback").innerText = "";
+  document.getElementById("answer").value = "";
+}
+
+function submitAnswer() {
+  let user = document.getElementById("answer").value.toLowerCase();
+  let correct = data[currentCategory][currentQ].answer;
+
+  if (user === correct) {
+    document.getElementById("feedback").innerText = "✅ Correct!";
+    score++;
+  } else {
+    attempts--;
+    document.getElementById("attempts").innerText = attempts;
+    document.getElementById("feedback").innerText = "❌ Wrong!";
+
+    if (attempts === 0) {
+      document.getElementById("feedback").innerText =
+        "❌ Answer: " + correct;
+    }
+  }
+}
+
+function getHint() {
+  if (hintCount < 3) {
+    alert(data[currentCategory][currentQ].hints[hintCount]);
+    hintCount++;
+    document.getElementById("hints").innerText = hintCount;
+  }
+}
+
+function nextQuestion() {
+  currentQ++;
+  if (currentQ < 5) {
+    loadQuestion();
+  } else {
+    document.getElementById("gameBox").innerHTML =
+      "<h2>🎉 Score: " + score + "/5</h2>";
+  }
+}
+
+// MEMORY GAME WITH ROUNDS
+
+let memoryData = {
+  anime: [
+    [["Naruto","Naruto"],["Gojo","Jujutsu Kaisen"],["Tanjiro","Demon Slayer"],["Eren","Attack on Titan"],["Hinata","Haikyuu"]],
+    [["Luffy","One Piece"],["Levi","Attack on Titan"],["Itadori","Jujutsu Kaisen"],["Zenitsu","Demon Slayer"],["Kageyama","Haikyuu"]],
+    [["Ichigo","Bleach"],["Asta","Black Clover"],["Natsu","Fairy Tail"],["Saitama","One Punch Man"],["Light","Death Note"]],
+    [["Edward","Fullmetal Alchemist"],["Gon","Hunter x Hunter"],["Killua","Hunter x Hunter"],["Mikasa","Attack on Titan"],["Nezuko","Demon Slayer"]],
+    [["Shoto","My Hero Academia"],["Deku","My Hero Academia"],["Bakugo","My Hero Academia"],["Sasuke","Naruto"],["Kakashi","Naruto"]]
+  ],
+
+  kpop: [
+    [["RM","BTS"],["Jennie","BLACKPINK"],["Bang Chan","Stray Kids"],["Karina","aespa"],["Wonyoung","IVE"]],
+    [["Jungkook","BTS"],["Lisa","BLACKPINK"],["Felix","Stray Kids"],["Ningning","aespa"],["Yujin","IVE"]],
+    [["V","BTS"],["Jisoo","BLACKPINK"],["Hyunjin","Stray Kids"],["Winter","aespa"],["Rei","IVE"]],
+    [["Jimin","BTS"],["Rosé","BLACKPINK"],["Han","Stray Kids"],["Giselle","aespa"],["Liz","IVE"]],
+    [["Suga","BTS"],["Chaeyoung","TWICE"],["Changbin","Stray Kids"],["Irene","Red Velvet"],["Joy","Red Velvet"]]
+  ],
+
+  kdrama: [
+    [["Vincenzo","Vincenzo"],["Goblin","Goblin"],["Bok Joo","Weightlifting Fairy"],["Gu Jun Pyo","Boys Over Flowers"],["Ri Jeong Hyeok","Crash Landing"]],
+    [["Dan Oh","Extraordinary You"],["Saeroyi","Itaewon Class"],["Jun Ho","King the Land"],["Ji Eun","Hotel Del Luna"],["Seo Jun","True Beauty"]],
+    [["Do Min Joon","My Love from Star"],["Hae In","Snowdrop"],["Moon Gang Tae","Its Okay to Not Be Okay"],["Sun Oh","Love Alarm"],["Ji Pyeong","Start Up"]],
+    [["Baek Hyun Woo","Queen of Tears"],["Ha Ri","Business Proposal"],["Se Ri","Crash Landing on You"],["Young Ro","Snowdrop"],["Dong Eun","The Glory"]],
+    [["Ik Jun","Hospital Playlist"],["Jun Wan","Hospital Playlist"],["Si Jin","Descendants of the Sun"],["Tae Moo","Business Proposal"],["Nam Do San","Start Up"]]
+  ]
+};
+
+let firstCard=null, secondCard=null, lock=false, matches=0;
+let currentRound = 0;
+let memCategory = "";
+
+function shuffle(arr){
+  for(let i=arr.length-1;i>0;i--){
+    let j=Math.floor(Math.random()*(i+1));
+    [arr[i],arr[j]]=[arr[j],arr[i]];
+  }
+}
+
+function startMemoryGame(){
+  memCategory=document.getElementById("memoryCategory").value;
+  currentRound=0;
+  loadRound();
+}
+
+function loadRound(){
+  let board=document.getElementById("gameBoard");
+  board.innerHTML="";
+  matches=0;
+  document.getElementById("winMsg").innerHTML="";
+
+  let pairs=memoryData[memCategory][currentRound];
+
+  let cards=[];
+  pairs.forEach(p=>{
+    cards.push({name:p[0],match:p[1]});
+    cards.push({name:p[1],match:p[0]});
+  });
+
+  shuffle(cards);
+
+  cards.forEach(c=>{
+    let div=document.createElement("div");
+    div.classList.add("card");
+    div.innerText="?";
+    div.dataset.name=c.name;
+    div.dataset.match=c.match;
+
+    div.onclick=function(){
+      if(lock||this.classList.contains("flipped")) return;
+
+      this.innerText=this.dataset.name;
+      this.classList.add("flipped");
+
+      if(!firstCard){
+        firstCard=this;
+      } else {
+        secondCard=this;
+        lock=true;
+
+        if(firstCard.dataset.match===secondCard.dataset.name){
+          matches++;
+          reset();
+
+          if(matches===pairs.length){
+            document.getElementById("winMsg").innerHTML =
+              "Congrats! You cleared the round!<br><br>" +
+              (currentRound < 4 
+                ? "<button onclick='nextRound()'>➡ Next Round</button>"
+                : "<h3>All Rounds Completed!</h3>");
+          }
+
+          
+
+        } else {
+          setTimeout(()=>{
+            firstCard.innerText="?";
+            secondCard.innerText="?";
+            firstCard.classList.remove("flipped");
+            secondCard.classList.remove("flipped");
+            reset();
+          },600);
+        }
+      }
+    };
+
+    board.appendChild(div);
+  });
+}
+
+function nextRound(){
+  currentRound++;
+  loadRound();
+}
+
+function reset(){
+  firstCard=null;
+  secondCard=null;
+  lock=false;
+}
+
+</script>
+
+</body>
+</html>

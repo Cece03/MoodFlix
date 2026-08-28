@@ -1,0 +1,657 @@
+/* ENTRY PAGE STYLES */
+
+.landing-page{
+    height:100vh;
+    background:url("images/EntryPageBG.png") no-repeat center/cover;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    overflow:hidden;
+    background-position: center;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+/* container */
+
+.landing-page .container{
+    position:relative;
+    font-family: Arial, Helvetica, sans-serif;
+
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+}
+
+/* title */
+
+.landing-page .title{
+    font-family: 'Great Vibes', cursive;
+    font-size:110px;
+    color:#e27e8d;
+    letter-spacing:6px;
+    text-shadow:
+        0 0 10px #ffc0cb,
+        0 0 20px #ff99cc,
+        0 0 40px #ff66b2;
+
+    animation:titleAppear 2s ease-in-out;
+
+    margin:0; /* removes huge default gap */
+}
+
+/* title animation */
+
+@keyframes titleAppear{
+    0%{
+        opacity:0;
+        transform:scale(0.5);
+    }
+    100%{
+        opacity:1;
+        transform:scale(1);
+    }
+}
+
+/* container for i */
+
+.landing-page .i-container{
+    position:relative;
+    display:inline-block;
+}
+
+/* fairy */
+
+.landing-page .i-container .fairy{
+    position:absolute;
+    width:120px;
+
+    top:-50px;
+    left:-15px;
+
+    animation:flyFairy 6s ease forwards;
+}
+
+/* start journey button */
+
+.start-btn{
+    display:inline-block;
+    margin-top:12px; /* small controlled spacing */
+    padding:14px 40px;
+    font-size:18px;
+    text-decoration:none;
+    border-radius:30px;
+    background:#ff66b2;
+    color:white;
+    font-weight:500;
+    transition:0.3s;
+}
+
+/* hover effect */
+
+.start-btn:hover{
+    background:#ff4da6;
+    transform:scale(1.05);
+}
+
+/* fairy flying animation */
+
+@keyframes flyFairy{
+
+0%{
+    transform:translate(900px,-300px);
+}
+
+50%{
+    transform:translate(300px,-150px);
+}
+
+80%{
+    transform:translate(120px,-70px);
+}
+
+100%{
+    transform:translate(0px,0px);
+}
+
+}
+
+
+
+
+/* HOME PAGE */
+
+.home-page{
+    height:100vh;
+    background:url("images/basic.png") no-repeat center/cover;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+}
+
+/* title */
+
+.home-title{
+    font-family:'Great Vibes', cursive;
+    font-size:90px;
+    color:#e27e8d;
+    margin-bottom:40px;
+}
+
+/* buttons container */
+
+.home-buttons{
+    display:flex;
+    flex-direction:column;
+    gap:15px;
+}
+
+/* buttons */
+
+.main-btn{
+    width:220px;
+    text-align:center;
+    padding:14px;
+    border-radius:30px;
+    text-decoration:none;
+    background:#ff66b2;
+    color:white;
+    font-size:18px;
+    transition:0.3s;
+}
+
+.main-btn:hover{
+    background:#ff4da6;
+    transform:scale(1.05);
+}
+
+
+
+/* SIGNUP PAGE */
+
+.signup-page{
+    height:100vh;
+    background:url("images/basic.png") no-repeat center/cover;
+    font-family:Arial, Helvetica, sans-serif;
+}
+
+.header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:20px 60px;
+    background-color:#fff6b3;
+    box-shadow:0 2px 8px rgba(0,0,0,0.1);
+}
+
+/* LOGO */
+
+.logo{
+    width:120px;
+    height: 100px
+}
+
+/* HEADER BUTTONS */
+
+.header-buttons{
+    display:flex;
+    gap:15px;
+}
+
+/* CAPSULE BUTTON */
+
+.capsule-btn{
+    padding:10px 50px;
+    border-radius:50px;
+    text-decoration:none;
+    background:#ff99cc;
+    color:white;
+    font-weight:500;
+    transition:0.3s;
+    
+}
+
+/* HOVER */
+
+.capsule-btn:hover{
+    background:#ff66b2;
+    transform:scale(1.05);
+}
+
+/* FORM */
+
+.form-container{
+    width:350px;
+    margin:120px auto;
+    text-align:center;
+}
+
+/* TITLE */
+
+.form-container h2{
+    margin-bottom:25px;
+    color:#e27e8d;
+}
+
+/* INPUT */
+
+.form-container input{
+    width:100%;
+    padding:12px;
+    margin-bottom:15px;
+    border-radius:8px;
+    border:1px solid #ddd;
+}
+
+/* SIGNUP BUTTON */
+
+.signup-btn{
+    width:100%;
+    padding:12px;
+    border:none;
+    border-radius:30px;
+    background:#ff66b2;
+    color:white;
+    font-size:16px;
+    cursor:pointer;
+}
+
+.signup-btn:hover{
+    background:#ff4da6;
+}
+/*                             */
+
+
+.forgot-link{
+display:block;
+margin-top:10px;
+text-decoration:none;
+color:#e27e8d;
+font-size:14px;
+}
+
+.forgot-link:hover{
+text-decoration:underline;
+}
+
+/*   USER DASHBOARD */
+/* DASHBOARD PAGE */
+
+.dashboard-page{
+height:100vh;
+background:url("images/UserDashBg.png") no-repeat center/cover; /* change name later */
+}
+
+/* DASHBOARD CONTAINER */
+
+.dashboard-container{
+display:flex;
+flex-direction:column;
+align-items:center;
+margin-top:120px;
+}
+
+/* TITLE */
+
+.dashboard-title{
+font-size:28px;
+color:#e27e8d;
+margin-bottom:40px;
+}
+
+/* BUTTON GRID */
+
+.dashboard-buttons{
+display:grid;
+grid-template-columns:repeat(3,200px);
+gap:25px;
+}
+
+/* CAPSULE BUTTONS */
+
+.dashboard-btn{
+text-align:center;
+padding:14px;
+border-radius:40px;
+text-decoration:none;
+background:#ff99cc;
+color:white;
+font-weight:500;
+transition:0.3s;
+}
+
+/* HOVER */
+
+.dashboard-btn:hover{
+background:#ff66b2;
+transform:scale(1.07);
+}
+
+/*          END OF USER DASHBOARD            */
+
+/* KDRAMA PAGE */
+/* KDRAMA PAGE */
+
+.kdrama-page{
+height:100vh;
+background:url("images/KdramaBg.png") no-repeat center/cover;
+position:relative;
+display:flex;
+justify-content:center;
+align-items:center;
+}
+
+/* BACK BUTTON */
+
+.back-btn{
+position:absolute;
+top:20px;
+left:20px;
+font-size:28px;
+text-decoration:none;
+color:white;
+background:rgba(0,0,0,0.5);
+padding:8px 14px;
+border-radius:50%;
+}
+
+/* TRAILER SCREEN */
+
+.trailer-container{
+position:absolute;
+
+top:48%;        /* moves it lower */
+left:48%;       /* centers horizontally */
+
+transform:translate(-50%, -50%);
+
+width:720px;    /* wider video */
+height:450px;   /* taller to match width */
+}
+
+/* adjust these if needed depending on computer screen position */
+
+
+.trailer-container iframe{
+width:110%;
+height:100%;
+border-radius:10px;
+}
+
+/* NEXT BUTTON */
+
+.next-btn{
+position:absolute;
+bottom:-50px;
+right:0;
+
+padding:10px 20px;
+border:none;
+border-radius:25px;
+
+background:#ff66b2;
+color:white;
+font-size:16px;
+cursor:pointer;
+}
+
+.next-btn:hover{
+background:#ff4da6;
+}
+/*       END OF KDRAMA SECTION */
+
+/*       kpop   */
+/* KPOP PAGE */
+
+.kpop-page{
+height:100vh;
+background:url("images/KpopBG.png") no-repeat center/cover;
+position:relative;
+}
+
+/* BACK ARROW */
+
+.back-arrow{
+position:absolute;
+top:20px;
+left:20px;
+font-size:28px;
+text-decoration:none;
+color:white;
+background:rgba(0,0,0,0.5);
+padding:8px 14px;
+border-radius:50%;
+}
+
+/* PLAYER POSITION */
+
+.kpop-player{
+position: absolute;
+top: 40%;
+right: 5%;
+transform: translateY(-50%);
+}
+
+#songPlayer{
+width: 480px;
+height: 350px;   /* slightly taller than width */
+border-radius: 10px;
+}
+
+/* VIDEO */
+
+.kpop-player iframe{
+width:100%;
+height:100%;
+border-radius:10px;
+}
+
+/* NEXT BUTTON */
+
+.next-song{
+position:absolute;
+bottom:-50px;
+right:0;
+
+padding:10px 20px;
+border:none;
+border-radius:25px;
+
+background:#ff66b2;
+color:white;
+font-size:16px;
+cursor:pointer;
+}
+
+.next-song:hover{
+background:#ff4da6;
+}
+/*  end of kpop section  */
+
+
+/*     CDRAMA SECTION START   */
+/* CDRAMA PAGE */
+
+.cdrama-page{
+height:100vh;
+width:100%;
+background-image:url("images/cdramabg.png");   /* your background */
+background-size:cover;
+background-position:center;
+position:relative;
+}
+
+
+/* Back Arrow */
+
+.back-arrow{
+position:absolute;
+top:20px;
+left:25px;
+font-size:32px;
+color:white;
+text-decoration:none;
+font-weight:bold;
+}
+
+
+/* Video Player */
+
+.cdrama-player{
+position:absolute;
+top:50%;
+left:50%;
+transform:translate(-50%,-50%);
+}
+
+
+/* Trailer Video */
+
+#cdramaTrailer{
+width:500px;
+height:350px;
+border-radius:12px;
+}
+
+
+/* Next Button */
+
+.next-trailer{
+position:absolute;
+bottom:-45px;
+right:0;
+font-size:26px;
+padding:6px 14px;
+border:none;
+background:white;
+cursor:pointer;
+border-radius:6px;
+}
+/*       CDRAMA SECTION ENDS HERE */
+
+
+/*      MANGA SECTION STARTS HERE   */
+/* Manga Page */
+
+.manga-page{
+background-image:url("images/mangabg.png");
+background-size:cover;
+background-position:center;
+min-height:100vh;
+padding:40px;
+}
+
+/* Back Arrow */
+
+.back-arrow{
+position:absolute;
+top:20px;
+left:25px;
+font-size:32px;
+color:white;
+text-decoration:none;
+font-weight:bold;
+}
+
+/* Grid Layout */
+
+.manga-container{
+display:grid;
+grid-template-columns:repeat(auto-fit, minmax(200px,1fr));
+gap:25px;
+margin-top:60px;
+}
+
+/* Manga Card */
+
+.manga-card{
+background:rgba(255,255,255,0.9);
+padding:10px;
+border-radius:10px;
+text-align:center;
+}
+
+.manga-card img{
+width:100%;
+height:260px;
+object-fit:cover;
+border-radius:6px;
+}
+
+.manga-card h3{
+margin:8px 0 5px;
+}
+
+.manga-card p{
+font-size:13px;
+}
+
+/*    MANGA SECTION ENDS HERE      */
+
+/*    ANIME SECTION STARTS HERE    */
+.body, html {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  font-family: Arial, sans-serif;
+}
+
+.anime-page {
+    height: 100vh;
+    width: 100vw;
+    background: url('images/animebg.png') no-repeat center center;
+    background-size: cover;
+    display: flex;
+    justify-content: center; /* centers horizontally */
+    align-items: center;     /* centers vertically */
+    position: relative;
+}
+
+.anime-trailer-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* centers content inside the container */
+}
+
+.anime-trailer-container iframe {
+    width: 640px;   /* you can increase/decrease */
+    height: 360px;  /* keeps 16:9 aspect ratio */
+    border: none;
+    box-shadow: 0 0 15px rgba(0,0,0,0.5);
+    margin-bottom: 20px; /* space for next button */
+}
+
+.next-trailer-btn {
+    align-self: flex-end; /* pushes the button to the right */
+    padding: 8px 15px;
+    font-size: 16px;
+    border-radius: 20px;
+    border: none;
+    background: #ff66b2;
+    color: white;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.next-trailer-btn:hover {
+    background: #ff4da6;
+    transform: scale(1.05);
+}
+
+/* back arrow */
+.back-arrow {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    font-size: 28px;
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+} 
+/*        n ANIME SECTION ENDS HERE      */
+
+

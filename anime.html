@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>MoodFlix - Anime Trailers</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="anime-page">
+
+    <a href="UserDash.html" class="back-arrow">←</a>
+
+    <div id="animeTrailersContainer">
+        <!-- Trailer + heart will be rendered here -->
+    </div>
+
+    <button class="next-trailer-btn" onclick="nextTrailer()">Next ▶</button>
+
+</div>
+
+<script>
+// All trailers
+let animeTrailers = [
+  { id: 1, src: "https://www.youtube.com/embed/LV-nazLVmgo?si=iaLWxxz76xEuuBJk", title: "Attack on Titan" },
+  { id: 2, src: "https://www.youtube.com/embed/x7uLutVRBfI?si=Vk83oYOqaJMh0fMV", title: "Demon Slayer" },
+  { id: 3, src: "https://www.youtube.com/embed/MPfZhgLiK6w?si=BeFG6SZRlBeuwUf8", title: "Jujutsu Kaisen" },
+  { id: 4, src: "https://www.youtube.com/embed/FwE87GX3dEc?si=wsQUdS0oXirvlI8X", title: "My Hero Academia" },
+  { id: 5, src: "https://www.youtube.com/embed/MCb13lbVGE0?si=T6Ewfi6qxjNqR_cg", title: "One Piece" },
+  { id: 6, src: "https://www.youtube.com/embed/-G9BqkgZXRA?si=Xh-0evXlfXpv7UHl", title: "Naruto" },
+  { id: 7, src: "https://www.youtube.com/embed/W99Ef2LkyOg?si=WCenLtXdbdxuPMiw", title: "Bleach" },
+  { id: 8, src: "https://www.youtube.com/embed/Fwyc8XhXVSA?si=i-7XxjnvtuAx-o7U", title: "Tokyo Revengers" },
+  { id: 9, src: "https://www.youtube.com/embed/ofXigq9aIpo?si=2LWkTkGmF0QZNfbr", title: "Spy x Family" },
+  { id: 10, src: "https://www.youtube.com/embed/_PRaywfa1LE?si=xY5NitvdaxV7zyQa", title: "Chainsaw Man" },
+  { id: 11, src: "https://www.youtube.com/embed/BwdMT-OiARI?si=tL4Bl7Fs18YvSxFl", title: "Black Clover" },
+  { id: 12, src: "https://www.youtube.com/embed/9KO6l9rjZto?si=N2Pg2EQPjPjOKJW5", title: "Haikyuu!!" },
+  { id: 13, src: "https://www.youtube.com/embed/4KSN7mxhiYE?si=kXRAgMXRhtclx-y6", title: "Fairy Tail" },
+  { id: 14, src: "https://www.youtube.com/embed/OOmRInABehI?si=d7ndEk0r6G7ZLSr5", title: "Dragon Ball Super" },
+  { id: 15, src: "https://www.youtube.com/embed/6ohYYtxfDCg?si=KtZedCJeCGqBTICP", title: "Sword Art Online" },
+  { id: 16, src: "https://www.youtube.com/embed/s4U5ipjy6Vk?si=mWdw5wqsWFeFXnKc", title: "The Seven Deadly Sins" },
+  { id: 17, src: "https://www.youtube.com/embed/jVl4bY81iIs?si=QTi3u6_k7xm2Dh3N", title: "Re:Zero" },
+  { id: 18, src: "https://www.youtube.com/embed/TrFVtba-BAo?si=fHN4UceefxLulLLL", title: "Blue Exorcist" },
+  { id: 19, src: "https://www.youtube.com/embed/rZ95aZmQu_8?si=bIbkGyRovaZxPKBi", title: "Love is War" }
+];
+
+let current = 0;
+
+// Wishlist functions
+function loadWishlist() {
+    return JSON.parse(localStorage.getItem("wishlist")) || [];
+}
+
+function saveWishlist(list) {
+    localStorage.setItem("wishlist", JSON.stringify(list));
+}
+
+function toggleWishlist(trailer) {
+    let wishlist = loadWishlist();
+    const index = wishlist.findIndex(t => t.id === trailer.id);
+
+    if(index > -1) {
+        wishlist.splice(index, 1);
+    } else {
+        wishlist.push(trailer);
+    }
+
+    saveWishlist(wishlist);
+    renderTrailer();
+}
+
+// Render current trailer + heart
+function renderTrailer() {
+    const container = document.getElementById("animeTrailersContainer");
+    container.innerHTML = "";
+
+    const trailer = animeTrailers[current];
+    const wishlist = loadWishlist();
+    const liked = wishlist.find(t => t.id === trailer.id);
+
+    const div = document.createElement("div");
+    div.className = "trailer-container";
+
+    const iframe = document.createElement("iframe");
+    iframe.id = "animeTrailer";
+    iframe.src = trailer.src;
+    iframe.allowFullscreen = true;
+    div.appendChild(iframe);
+
+    const heart = document.createElement("a");
+    heart.className = "heart-btn";
+    heart.innerHTML = liked ? "❤️" : "♡";
+    heart.href = "Wishlist.html";
+    heart.addEventListener("click", (e) => {
+        e.preventDefault();
+        toggleWishlist(trailer);
+    });
+    div.appendChild(heart);
+
+    container.appendChild(div);
+}
+
+// Next trailer
+function nextTrailer() {
+    current++;
+    if(current >= animeTrailers.length) current = 0;
+    renderTrailer();
+}
+
+// Initial render
+renderTrailer();
+</script>
+
+</body>
+</html>

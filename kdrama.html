@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>MoodFlix - KDrama</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="kdrama-page">
+
+    <!-- Back Button -->
+    <a href="UserDash.html" class="back-btn">←</a>
+
+    <!-- Trailer Screen -->
+    <div class="trailer-container" style="text-align:center;">
+
+        <iframe id="trailer" width="560" height="315"
+        src="https://www.youtube.com/embed/GVQGWgeVc4k"
+        frameborder="0" allowfullscreen></iframe>
+
+        <div style="margin-top:10px;">
+            <button class="next-btn" onclick="nextTrailer()">Next ▶</button>
+            <button class="wishlist-btn" onclick="addToWishlist()">❤️</button>
+        </div>
+
+    </div>
+
+</div>
+
+<script>
+// K-Drama videos with titles
+let trailers = [
+  {url:"https://www.youtube.com/embed/Y5Cp5V9_sKo", title:"Crash Landing On You"},
+  {url:"https://www.youtube.com/embed/8AcNEVUzV4o", title:"Goblin"},
+  {url:"https://www.youtube.com/embed/_J8tYxYB_YU?si=f7fPWRjNHugpktRw", title:"Vincenzo"},
+  {url:"https://www.youtube.com/embed/mh4R-WXRhQo?si=ZQW6eBzVcXICdUbF", title:"Business Proposal"},
+  {url:"https://www.youtube.com/embed/BhP1eYQ5Pxk?si=-xs6VvBDG3hAaq1B", title:"True Beauty"},
+  {url:"https://www.youtube.com/embed/NeaHNQJ1kCo?si=LW9MKV1UQzl-KSuv", title:"Itaewon Class"},
+  {url:"https://www.youtube.com/embed/wTGwjDqtfzQ?si=C-Bz6WXG2qGWyVRP", title:"Descendants of the Sun"},
+  {url:"https://www.youtube.com/embed/lJ3_1v8sB48?si=B0MXkwaWR-0YaQN9", title:"Hotel Del Luna"},
+  {url:"https://www.youtube.com/embed/a_1Tf3Rhf6E?si=xMdQ15FE1yqoF-VA", title:"Extraordinary You"},
+  {url:"https://www.youtube.com/embed/EDGfWN36q5o?si=jf1ZomauocBfGB_8", title:"What's Wrong With Secretary Kim"},
+  {url:"https://www.youtube.com/embed/kjiPsdiHWm0?si=EOcJm_-S6zQPiqhe", title:"Penthouse"},
+  {url:"https://www.youtube.com/embed/iuqwMI6dpJA?si=ZnDBeVYeyANXBzai", title:"Boys Over Flowers"},
+  {url:"https://www.youtube.com/embed/Y0WSF5ikpvU?si=NLG2PECN1LgBVU52", title:"The Heirs"},
+  {url:"https://www.youtube.com/embed/BcYin0vw1yc?si=cgx8AedAuX0C0BhS", title:"Pyramid Game"},
+  {url:"https://www.youtube.com/embed/A0GqKTgSpuE?si=qSQfhVYnYwP5Hngf", title:"Boyfriend On Demand"},
+  {url:"https://www.youtube.com/embed/z66fazyp3-M?si=9sKFWaZr2H9cxD7Z", title:"Hometown Cha Cha Cha"},
+  {url:"https://www.youtube.com/embed/2ljxyaAIphc?si=HMYZWldGkNGw5SDa", title:"Moon Lovers Scarlet Heart"},
+  {url:"https://www.youtube.com/embed/nlRw1CGbFU0?si=x9pe1evTonizyEy2", title:"Alchemy of Souls"},
+  {url:"https://www.youtube.com/embed/tQM2aelaWzc?si=ftrK7uueOTUpkM99", title:"Weightlifting Fairy Kim Bok Joo"},
+  {url:"https://www.youtube.com/embed/gYp4cKumTwU?si=P9yVHDr6r25i7C9p", title:"Twenty Five Twenty One"}
+];
+
+let index = 0;
+
+// Next video
+function nextTrailer(){
+    index++;
+    if(index >= trailers.length) index = 0;
+    document.getElementById("trailer").src = trailers[index].url;
+}
+
+// Add current video to wishlist
+function addToWishlist(){
+    let wishlist = JSON.parse(localStorage.getItem("wishlist") || "[]");
+    let currentVideo = trailers[index];
+
+    // Check if already in wishlist
+    if(!wishlist.find(v => v.url === currentVideo.url)){
+        wishlist.push(currentVideo);
+        alert(`Added "${currentVideo.title}" to wishlist!`);
+    } else {
+        alert(`"${currentVideo.title}" is already in wishlist!`);
+    }
+
+    localStorage.setItem("wishlist", JSON.stringify(wishlist));
+}
+</script>
+
+</body>
+</html>

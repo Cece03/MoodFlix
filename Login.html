@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>MoodFlix - Login</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<div class="signup-page">
+
+    <!-- HEADER -->
+
+    <header class="header">
+
+        <img src="images/Logo.png" class="logo">
+
+        <div class="header-buttons">
+            <a href="signup.html" class="capsule-btn">REGISTER</a>
+            <a href="home.html" class="capsule-btn">GO BACK</a>
+        </div>
+
+    </header>
+
+    <!-- LOGIN FORM -->
+
+    <div class="form-container">
+
+        <h2>Login to MoodFlix</h2>
+
+        <form id="loginForm">
+
+            <!-- ✅ CHANGED to Email -->
+            <input type="email" id="email" placeholder="Email" required>
+
+            <input type="password" id="password" placeholder="Password" required>
+
+            <a href="ForgetPwd.html" class="forgot-link">Forgot Password?</a>
+
+            <!-- ✅ REMOVED direct redirect -->
+            <button type="submit" class="signup-btn">
+                LOGIN
+            </button>
+
+        </form>
+
+    </div>
+
+</div>
+
+<script>
+const form = document.getElementById("loginForm");
+
+form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    const email = document.getElementById("email").value;
+    const password = document.getElementById("password").value;
+
+    try {
+        const res = await fetch("http://localhost:5000/login", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ email, password })
+        });
+
+        const data = await res.json();
+
+        alert(data.message || data.error);
+
+        // 🔥 FIXED CONDITION
+        if (data.message && data.message.includes("successful")) {
+
+            // optional: store token
+            localStorage.setItem("token", data.token);
+
+            // ✅ REDIRECT
+            window.location.href = "UserDash.html";
+        }
+
+    } catch (err) {
+        alert("Error connecting to server ❌");
+        console.error(err);
+    }
+});
+</script>
+
+</body>
+</html>

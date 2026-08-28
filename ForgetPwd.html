@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>MoodFlix - ForgetPwd</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<div class="signup-page">
+
+<header class="header">
+
+<img src="images/Logo.png" class="logo">
+
+<div class="header-buttons">
+<a href="login.html" class="capsule-btn">Login</a>
+<a href="signup.html" class="capsule-btn">Register</a>
+</div>
+
+</header>
+
+<div class="form-container">
+
+<h2>Reset Password</h2>
+
+<form id="resetForm">
+
+<input type="email" id="email" placeholder="Enter Email" required>
+
+<input type="password" id="newPassword" placeholder="Enter New Password" required>
+
+<button type="button" class="signup-btn" onclick="resetPassword()">Save Password</button>
+
+</form>
+
+</div>
+
+</div>
+
+<script>
+
+// 🔥 AUTO FILL EMAIL
+window.onload = function(){
+    const savedEmail = localStorage.getItem("resetEmail");
+    if(savedEmail){
+        document.getElementById("email").value = savedEmail;
+    }
+};
+
+async function resetPassword(){
+    let email = document.getElementById("email").value;
+    const password = document.getElementById("newPassword").value;
+
+    // 🔥 FIX: match backend lowercase
+    email = email.toLowerCase();
+
+    if(password.length < 4){
+        alert("Password too short");
+        return;
+    }
+
+    try {
+        const res = await fetch("http://localhost:5000/reset-password", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ email, newPassword: password })
+        });
+
+        const data = await res.json();
+
+        // 🔥 FIX: handle error properly
+        if(data.error){
+            alert(data.error);
+            return;
+        }
+
+        alert(data.message);
+
+        if(data.message){
+            localStorage.removeItem("resetEmail"); // cleanup
+            window.location.href = "login.html";
+        }
+
+    } catch(err){
+        alert("Error connecting to server");
+        console.error(err);
+    }
+}
+</script>
+
+</body>
+</html>

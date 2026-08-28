@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>MoodFlix - CDrama</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="cdrama-page">
+
+    <a href="UserDash.html" class="back-arrow">←</a>
+
+    <div class="cdrama-player" style="text-align:center;">
+
+        <iframe id="cdramaTrailer" width="560" height="315"
+        src="https://www.youtube.com/embed/tiwcMjH1dRw?si=6isqFUSgr-WZtaWZ"
+        frameborder="0" allowfullscreen></iframe>
+
+        <div style="margin-top:10px;">
+            <button class="next-trailer" onclick="nextTrailer()">Next ▶</button>
+            <button class="wishlist-btn" onclick="addToWishlist()">❤️</button>
+        </div>
+
+    </div>
+
+</div>
+
+<script>
+// All C-Drama videos with titles
+let trailers = [
+  {url:"https://www.youtube.com/embed/tiwcMjH1dRw?si=6isqFUSgr-WZtaWZ", title:"Hidden Love"},
+  {url:"https://www.youtube.com/embed/HrUeOw7zL40?si=j0vmHkQjFXsQZesr", title:"Love Between Fairy and Devil"},
+  {url:"https://www.youtube.com/embed/2ldvydu34Is?si=aSCtlv3mBjrM62nc", title:"The Untamed"},
+  {url:"https://www.youtube.com/embed/-oSUun-c6vU?si=45utRaz9o8otaOrT", title:"Ashes of Love"},
+  {url:"https://www.youtube.com/embed/tiiN4rDwa8g?si=4ivlE-wHL3cFcAuP", title:"Love O2O"},
+  {url:"https://www.youtube.com/embed/UAqljBnWzRE?si=W7r7MZ88A4W51VP1", title:"Go Ahead"},
+  {url:"https://www.youtube.com/embed/DyAsfo6rEz0?si=zMbiupQ-1cFGfePl", title:"The Rise of the Phoenixes"},
+  {url:"https://www.youtube.com/embed/qgW4Zu6Ikv4?si=Kl1DSf0HnTd2rGC0", title:"Love Like the Galaxy"},
+  {url:"https://www.youtube.com/embed/jryg9juelEw?si=RysD3W7ZAIDe4Qrf", title:"Till the End of the Moon"},
+  {url:"https://www.youtube.com/embed/Z4xLnxser7s?si=3q5tRDvM0-rvHMig", title:"Story of Yanxi Palace"},
+  {url:"https://www.youtube.com/embed/23PlXDnakJM?si=ZL1K7CKfxfwwIvdg", title:"You Are My Glory"},
+  {url:"https://www.youtube.com/embed/jZZgDL5ID4Y?si=Gghvh_OaGa_I41HQ", title:"Go Go Squid!"},
+  {url:"https://www.youtube.com/embed/qSruSMJACmg?si=c8lqjLvSZqSZkCOq", title:"Put Your Head on My Shoulder"},
+  {url:"https://www.youtube.com/embed/HXwaSNE8WXs?si=SzyxLwNPCSOuHW-u", title:"The Princess Weiyoung"},
+  {url:"https://www.youtube.com/embed/Kl8pzQzkqQ0?si=8cEQ1gZyqcu9nQeu", title:"Love and Redemption"},
+  {url:"https://www.youtube.com/embed/KqXabRfHvOI?si=gepC8yr-m7oiallQ", title:"Who Rules the World"},
+  {url:"https://www.youtube.com/embed/T-3WjYwL5-I?si=LYiuYYZr0y_GJqo-", title:"Falling Into Your Smile"},
+  {url:"https://www.youtube.com/embed/_r96odMS9NM?si=dqMw49pi5oLgdHWW", title:"The Longest Promise"},
+  {url:"https://www.youtube.com/embed/t8DLwyxgcxY?si=qYDkbPYU-qAou4-7", title:"The King's Woman"}
+];
+
+let index = 0;
+
+// Move to next video
+function nextTrailer(){
+    index++;
+    if(index >= trailers.length) index = 0;
+    document.getElementById("cdramaTrailer").src = trailers[index].url;
+}
+
+// Add current video to wishlist
+function addToWishlist(){
+    let wishlist = JSON.parse(localStorage.getItem("wishlist") || "[]");
+    let currentVideo = trailers[index];
+
+    // Check if already in wishlist
+    if(!wishlist.find(v => v.url === currentVideo.url)){
+        wishlist.push(currentVideo);
+        alert(`Added "${currentVideo.title}" to wishlist!`);
+    } else {
+        alert(`"${currentVideo.title}" is already in wishlist!`);
+    }
+
+    localStorage.setItem("wishlist", JSON.stringify(wishlist));
+}
+</script>
+
+</body>
+</html>

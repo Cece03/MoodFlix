@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>MoodFlix - Manga</title>
+<link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<div class="manga-page">
+
+<!-- Back Arrow -->
+<a href="UserDash.html" class="back-arrow">←</a>
+
+<div class="manga-container">
+
+<!-- ONE PIECE -->
+<div class="manga-card">
+<img src="https://cdn.myanimelist.net/images/manga/2/253146.jpg">
+<h3>One Piece</h3>
+<p>A boy with rubber powers sails the seas to find the legendary treasure One Piece and become Pirate King.</p>
+<button onclick="addToWishlist('One Piece')">❤️</button>
+</div>
+
+<!-- NARUTO -->
+<div class="manga-card">
+<img src="https://cdn.myanimelist.net/images/manga/3/117681.jpg">
+<h3>Naruto</h3>
+<p>A young ninja with a demon fox inside him dreams of becoming the strongest leader of his village.</p>
+<button onclick="addToWishlist('Naruto')">❤️</button>
+</div>
+
+<!-- DEATH NOTE -->
+<div class="manga-card">
+<img src="https://cdn.myanimelist.net/images/manga/1/258245.jpg">
+<h3>Death Note</h3>
+<p>A student discovers a notebook that can kill anyone whose name is written inside it.</p>
+<button onclick="addToWishlist('Death Note')">❤️</button>
+</div>
+
+<!-- ATTACK ON TITAN -->
+<div class="manga-card">
+<img src="https://cdn.myanimelist.net/images/manga/2/37846.jpg">
+<h3>Attack on Titan</h3>
+<p>Humanity fights giant monsters called Titans while uncovering dark secrets of their world.</p>
+<button onclick="addToWishlist('Attack on Titan')">❤️</button>
+</div>
+
+<!-- DEMON SLAYER -->
+<div class="manga-card">
+<img src="https://cdn.myanimelist.net/images/manga/3/179023.jpg">
+<h3>Demon Slayer</h3>
+<p>A boy joins demon slayers to save his sister and avenge his murdered family.</p>
+<button onclick="addToWishlist('Demon Slayer')">❤️</button>
+</div>
+
+<!-- JUJUTSU KAISEN -->
+<div class="manga-card">
+<img src="https://cdn.myanimelist.net/images/manga/3/210341.jpg">
+<h3>Jujutsu Kaisen</h3>
+<p>A teenager enters the world of curses and sorcerers after swallowing a powerful cursed object.</p>
+<button onclick="addToWishlist('Jujutsu Kaisen')">❤️</button>
+</div>
+
+<!-- CHAINSAW MAN -->
+<div class="manga-card">
+<img src="https://cdn.myanimelist.net/images/manga/3/216464.jpg">
+<h3>Chainsaw Man</h3>
+<p>A poor boy merges with his chainsaw demon and hunts devils for survival.</p>
+<button onclick="addToWishlist('Chainsaw Man')">❤️</button>
+</div>
+
+<!-- SOLO LEVELING -->
+<div class="manga-card">
+<img src="https://cdn.myanimelist.net/images/manga/3/222295.jpg">
+<h3>Solo Leveling</h3>
+<p>The weakest hunter suddenly gains the power to level up endlessly and becomes unstoppable.</p>
+<button onclick="addToWishlist('Solo Leveling')">❤️</button>
+</div>
+
+<!-- GOD OF HIGH SCHOOL -->
+<div class="manga-card">
+<img src="https://cdn.myanimelist.net/images/manga/2/196930.jpg">
+<h3>The God of High School</h3>
+<p>Students compete in a martial arts tournament with supernatural powers.</p>
+<button onclick="addToWishlist('The God of High School')">❤️</button>
+</div>
+
+<!-- BLACK CLOVER -->
+<div class="manga-card">
+<img src="https://cdn.myanimelist.net/images/manga/2/166805.jpg">
+<h3>Black Clover</h3>
+<p>A boy without magic in a magical world aims to become the Wizard King.</p>
+<button onclick="addToWishlist('Black Clover')">❤️</button>
+</div>
+
+</div>
+</div>
+
+<!-- ❤️ SCRIPT -->
+
+<script>
+// Use localStorage to store wishlist with manga info
+function addToWishlist(mangaName, mangaImg) {
+    let wishlist = JSON.parse(localStorage.getItem("wishlist") || "[]");
+
+    // Check if already in wishlist
+    if (!wishlist.find(item => item.title === mangaName)) {
+        wishlist.push({ title: mangaName, image: mangaImg });
+        alert(`Added "${mangaName}" to wishlist!`);
+    } else {
+        alert(`"${mangaName}" is already in wishlist!`);
+    }
+
+    localStorage.setItem("wishlist", JSON.stringify(wishlist));
+}
+</script>
+
+</body>
+</html>
